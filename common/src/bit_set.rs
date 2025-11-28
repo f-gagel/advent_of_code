@@ -98,7 +98,7 @@ impl BitSet {
         self.bits[bucket] & mask == mask
     }
 
-    pub fn iter(&self) -> Iter {
+    pub fn iter(&self) -> Iter<'_> {
         Iter { set: self, pos: 0 }
     }
 

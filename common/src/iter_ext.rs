@@ -2,9 +2,9 @@ use std::mem::MaybeUninit;
 use std::ops::{AddAssign, MulAssign};
 
 pub fn try_flatten<T, E, TS, I>(iter: I) -> TryFlatten<T, E, TS, I>
-    where
-        TS: IntoIterator<Item=T>,
-        I: Iterator<Item=Result<TS, E>>,
+where
+    TS: IntoIterator<Item = T>,
+    I: Iterator<Item = Result<TS, E>>,
 {
     TryFlatten {
         super_iter: iter,
@@ -13,9 +13,9 @@ pub fn try_flatten<T, E, TS, I>(iter: I) -> TryFlatten<T, E, TS, I>
 }
 
 pub struct TryFlatten<T, E, TS, I>
-    where
-        TS: IntoIterator<Item=T>,
-        I: Iterator<Item=Result<TS, E>>,
+where
+    TS: IntoIterator<Item = T>,
+    I: Iterator<Item = Result<TS, E>>,
 {
     super_iter: I,
     current_iter: Option<ResultIter<TS::IntoIter, E>>,
@@ -27,9 +27,9 @@ enum ResultIter<I: Iterator, E> {
 }
 
 impl<T, E, TS, I> Iterator for TryFlatten<T, E, TS, I>
-    where
-        TS: IntoIterator<Item=T>,
-        I: Iterator<Item=Result<TS, E>>,
+where
+    TS: IntoIterator<Item = T>,
+    I: Iterator<Item = Result<TS, E>>,
 {
     type Item = Result<T, E>;
 
@@ -81,8 +81,7 @@ pub unsafe trait UnlimitedIterator: Iterator {
     }
 }
 
-unsafe impl<I> UnlimitedIterator for std::iter::Cycle<I>
-    where I: Iterator + Clone {}
+unsafe impl<I> UnlimitedIterator for std::iter::Cycle<I> where I: Iterator + Clone {}
 
 pub trait TrySum<A = Self>: Sized {
     fn try_sum<E>(i: impl TryIterator<A, E>) -> Result<Self, E>;
@@ -126,31 +125,31 @@ impl<A, S: Default + Extend<A>> TryCollect<A> for S {
     }
 }
 
-pub trait TryIterator<T, E>: Iterator<Item=Result<T, E>> {
+pub trait TryIterator<T, E>: Iterator<Item = Result<T, E>> {
     fn try_sum<S>(self) -> Result<S, E>
-        where
-            Self: Sized,
-            S: TrySum<T>,
+    where
+        Self: Sized,
+        S: TrySum<T>,
     {
         TrySum::try_sum(self)
     }
     fn try_product<S>(self) -> Result<S, E>
-        where
-            Self: Sized,
-            S: TryProduct<T>,
+    where
+        Self: Sized,
+        S: TryProduct<T>,
     {
         TryProduct::try_product(self)
     }
     fn try_collect2<S>(self) -> Result<S, E>
-        where
-            Self: Sized,
-            S: TryCollect<T>,
+    where
+        Self: Sized,
+        S: TryCollect<T>,
     {
         TryCollect::try_collect(self)
     }
 }
 
-impl<T, E, I: Iterator<Item=Result<T, E>>> TryIterator<T, E> for I {}
+impl<T, E, I: Iterator<Item = Result<T, E>>> TryIterator<T, E> for I {}
 
 struct CollectFixedArray<T, const N: usize> {
     array: MaybeUninit<[T; N]>,
@@ -159,9 +158,7 @@ struct CollectFixedArray<T, const N: usize> {
 
 impl<T, const N: usize> Drop for CollectFixedArray<T, N> {
     fn drop(&mut self) {
-        let array = unsafe {
-            self.array.assume_init_mut()
-        };
+        let array = unsafe { self.array.assume_init_mut() };
         for i in 0..self.cursor {
             unsafe { std::ptr::drop_in_place(&mut array[i] as *mut _) };
         }
@@ -184,9 +181,7 @@ impl<T, const N: usize> CollectFixedArray<T, N> {
     }
     fn get_array(mut self) -> [T; N] {
         assert_eq!(self.cursor, N, "Attempted collect array before it was full");
-        let moved = unsafe {
-            self.array.assume_init_read()
-        };
+        let moved = unsafe { self.array.assume_init_read() };
         // reset the cursor to prevent dropping element after theyre moved out
         self.cursor = 0;
         moved

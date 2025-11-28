@@ -1,8 +1,8 @@
+use rayon::prelude::*;
 use std::convert::Infallible;
-use std::io::{Write, BufReader};
+use std::io::{BufReader, Write};
 use std::path::PathBuf;
 use std::time::Duration;
-use rayon::prelude::*;
 
 #[derive(Debug, clap_derive::Parser)]
 pub struct Args;
@@ -40,10 +40,10 @@ pub fn run(_: Args) -> Result<(), Infallible> {
                 }
             };
 
-            let _ = stdout.lock().write_fmt(
-                format_args!("{}\r\n",
-                             crate::format_detailed(result, year, day, task, elapsed))
-            );
+            let _ = stdout.lock().write_fmt(format_args!(
+                "{}\r\n",
+                crate::format_detailed(result, year, day, task, elapsed)
+            ));
 
             elapsed
         })

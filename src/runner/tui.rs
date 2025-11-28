@@ -10,9 +10,9 @@ use crossterm::{
 use tui::buffer::Buffer;
 use tui::layout::Rect;
 use tui::{
+    Terminal,
     backend::{Backend, CrosstermBackend},
     widgets::{Block, BorderType, List, ListItem, ListState},
-    Terminal,
 };
 
 use tui::widgets::{Borders, StatefulWidget, Widget};

@@ -14,7 +14,9 @@ macro_rules! impl_score {
     };
 }
 
-impl_score!(u8, u16, u32, u64, u128, i8, i16, i32, i64, i128, NonNanF32, NonNanF64,);
+impl_score!(
+    u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize, NonNanF32, NonNanF64,
+);
 
 #[derive(Debug, Copy, Clone, Default, PartialEq, PartialOrd)]
 pub struct NonNanF32(f32);

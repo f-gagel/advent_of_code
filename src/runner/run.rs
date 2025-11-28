@@ -1,6 +1,6 @@
-use std::{path::PathBuf, io::BufReader};
 use std::fs::File;
 use std::io::stdout;
+use std::{io::BufReader, path::PathBuf};
 
 #[derive(Debug, clap_derive::Parser)]
 pub struct Args {
@@ -10,9 +10,17 @@ pub struct Args {
     day: String,
     #[clap(help = "The name of the task to be run. (i.e. task1)")]
     task: String,
-    #[clap(short, long, help = "The path to the input file. If omitted it will be assumed to './YEAR/inputs/DAY.txt'.")]
+    #[clap(
+        short,
+        long,
+        help = "The path to the input file. If omitted it will be assumed to './YEAR/inputs/DAY.txt'."
+    )]
     input: Option<PathBuf>,
-    #[clap(short, long, help = "The path to the output file. If omitted the result will be written to stdout.")]
+    #[clap(
+        short,
+        long,
+        help = "The path to the output file. If omitted the result will be written to stdout."
+    )]
     output: Option<PathBuf>,
 }
 
@@ -37,10 +45,7 @@ pub enum Error {
 }
 
 pub fn run(args: Args) -> Result<(), Error> {
-    let y = crate::YEARS
-        .iter()
-        .filter(|y| y.name == args.year)
-        .next();
+    let y = crate::YEARS.iter().filter(|y| y.name == args.year).next();
 
     let year = match y {
         Some(y) => y,
@@ -63,13 +68,10 @@ pub fn run(args: Args) -> Result<(), Error> {
 
     let input_path = match args.input {
         Some(p) => p,
-        None => PathBuf::from(format!(
-            "{}/inputs/{}.txt", args.year, args.day
-        ))
+        None => PathBuf::from(format!("{}/inputs/{}.txt", args.year, args.day)),
     };
 
-    let file = File::open(&input_path)
-        .map_err(move |_| Error::FileNotFound(input_path))?;
+    let file = File::open(&input_path).map_err(move |_| Error::FileNotFound(input_path))?;
 
     let mut buf = BufReader::new(file);
 
@@ -84,16 +86,20 @@ pub fn run(args: Args) -> Result<(), Error> {
         None => {
             std_out = stdout().lock();
             output = &mut std_out;
-        },
+        }
         Some(path) => match File::open(path.clone()) {
             Err(e) => return Err(Error::IoError(e)),
             Ok(f) => {
                 file_out = f;
                 output = &mut file_out;
-            },
-        }
+            }
+        },
     };
 
-    write!(output, "{}", crate::format_detailed(result, year, day, task, elapsed))?;
+    write!(
+        output,
+        "{}",
+        crate::format_detailed(result, year, day, task, elapsed)
+    )?;
     Ok(())
 }

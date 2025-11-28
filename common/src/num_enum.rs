@@ -18,7 +18,11 @@ pub struct NumEnumFromError {
 
 impl Display for NumEnumFromError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Num enum '{}' does not contain a variant for value {}", self.type_name, self.value)
+        write!(
+            f,
+            "Num enum '{}' does not contain a variant for value {}",
+            self.type_name, self.value
+        )
     }
 }
 

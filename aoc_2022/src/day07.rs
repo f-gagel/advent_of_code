@@ -30,7 +30,7 @@ enum Command<'a> {
     Ls,
 }
 
-fn try_parse_command(s: &str) -> Option<Result<Command, Error>> {
+fn try_parse_command(s: &str) -> Option<Result<Command<'_>, Error>> {
     if &s[..2] != "$ " {
         return None;
     }

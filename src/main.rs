@@ -2,8 +2,8 @@ pub use aoc_2021;
 pub use aoc_2022;
 pub use aoc_2023;
 
-use std::time::Duration;
 use common::*;
+use std::time::Duration;
 
 mod runner {
     #[cfg(feature = "parallel")]
@@ -72,7 +72,13 @@ fn format_duration(duration: Duration) -> String {
     }
 }
 
-fn format_detailed(res: Result<String, String>, y: &Year, d: &Day, t: &Task, duration: Duration) -> String {
+fn format_detailed(
+    res: Result<String, String>,
+    y: &Year,
+    d: &Day,
+    t: &Task,
+    duration: Duration,
+) -> String {
     let (status, message) = match res {
         Ok(ok) => ("OK ", ok),
         Err(e) => ("ERR", e),

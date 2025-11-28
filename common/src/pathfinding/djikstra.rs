@@ -73,6 +73,13 @@ where
         target: W::Index,
         max_steps: Option<u32>,
     ) -> Result<Path<'a, W>, Self::Error> {
+        if start == target {
+            return Ok(Path {
+                world,
+                positions: vec![start],
+            });
+        }
+
         let mut paths = Vec::new();
         let mut visited = HashSet::new();
         visited.insert(start.clone());

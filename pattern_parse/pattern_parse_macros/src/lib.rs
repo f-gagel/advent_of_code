@@ -1,8 +1,8 @@
 use std::{error::Error, fmt::Debug};
 
 use proc_macro2::TokenStream;
-use quote::{format_ident, quote, ToTokens};
-use syn::{parse::Parse, Ident, LitStr, Token};
+use quote::{ToTokens, format_ident, quote};
+use syn::{Ident, LitStr, Token, parse::Parse};
 
 struct DeclPattern {
     pub_token: Option<Token!(pub)>,

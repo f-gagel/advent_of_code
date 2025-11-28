@@ -1,10 +1,10 @@
+use super::Input;
 use std::convert::Infallible;
 use std::io::BufRead;
 use std::iter::*;
 use std::marker::PhantomData;
 use std::mem::MaybeUninit;
 use std::str::FromStr;
-use super::Input;
 
 pub fn parse_lines<E>(
     reader: &mut impl BufRead,
@@ -107,10 +107,6 @@ impl<T: FromStr> Iterator for Grouped<'_, T> {
             vec.push(t);
         }
 
-        if vec.is_empty() {
-            None
-        } else {
-            Some(Ok(vec))
-        }
+        if vec.is_empty() { None } else { Some(Ok(vec)) }
     }
 }

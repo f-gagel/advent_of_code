@@ -101,7 +101,7 @@ impl Deref for SnapshotRef<'_> {
 }
 
 impl Map {
-    fn get_snapshot(&self, time: usize) -> SnapshotRef {
+    fn get_snapshot(&self, time: usize) -> SnapshotRef<'_> {
         let mut vec = self.0.borrow_mut();
         if time >= vec.len() {
             for t in (vec.len() - 1)..time {

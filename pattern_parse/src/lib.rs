@@ -2,7 +2,7 @@
 //!
 //! There currently only exists the [`parse_fn`] macro.
 
-use std::{fmt::Display, num::ParseIntError, str::FromStr, borrow::Cow, convert::Infallible};
+use std::{borrow::Cow, convert::Infallible, fmt::Display, num::ParseIntError, str::FromStr};
 
 pub use pattern_parse_macros::parse_fn;
 
@@ -97,7 +97,11 @@ impl std::error::Error for ParseError {
 
 impl Display for ParseError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Parsing error at position {}: {}", self.position, self.error)
+        write!(
+            f,
+            "Parsing error at position {}: {}",
+            self.position, self.error
+        )
     }
 }
 

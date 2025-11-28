@@ -51,15 +51,13 @@ macro_rules! for_ok {
 
 #[macro_export]
 macro_rules! some_or_continue {
-    ($e:expr) => {
-        {
-            let __res: Option<_> = $e;
-            match __res {
-                Some(val) => val,
-                None => continue,
-            }
+    ($e:expr) => {{
+        let __res: Option<_> = $e;
+        match __res {
+            Some(val) => val,
+            None => continue,
         }
-    }
+    }};
 }
 
 #[macro_export]
@@ -77,13 +75,11 @@ macro_rules! some_or_break {
 
 #[macro_export]
 macro_rules! ok_or_continue {
-    ($e:expr) => {
-        {
-            let __res: Result<_, _> = $e;
-            match $e {
-                Ok(val) => val,
-                Err(_) => continue,
-            }
+    ($e:expr) => {{
+        let __res: Result<_, _> = $e;
+        match $e {
+            Ok(val) => val,
+            Err(_) => continue,
         }
-    }
+    }};
 }

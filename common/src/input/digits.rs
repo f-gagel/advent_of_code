@@ -12,7 +12,8 @@ impl<T> DigitMap<T> {
 }
 
 impl<'a, T: FromStr> Input<'a> for DigitMap<T>
-    where T::Err: 'static + std::error::Error 
+where
+    T::Err: 'static + std::error::Error,
 {
     type Error = T::Err;
 
@@ -22,11 +23,16 @@ impl<'a, T: FromStr> Input<'a> for DigitMap<T>
         loop {
             // try to read the next line
             let count = read.read_line(&mut buf).unwrap();
-            if count == 0 { break; }
+            if count == 0 {
+                break;
+            }
 
             // trim trailing whitespace and ensure we have only digits
             let s = buf.trim_end();
-            debug_assert!(s.chars().all(|c| char::is_ascii_digit(&c)), "Line contains non-digit characters");
+            debug_assert!(
+                s.chars().all(|c| char::is_ascii_digit(&c)),
+                "Line contains non-digit characters"
+            );
 
             // parse the digits
             let mut line = Vec::with_capacity(s.len());

@@ -27,10 +27,10 @@ impl pattern_parse::PatternParse for Cave {
         }
 
         let is_upper = input.chars().next().unwrap().is_uppercase();
-        let value: u16 = unsafe {
+        let value: u16 = {
             let mut bytes = [0; 2];
             bytes.copy_from_slice(&input.as_bytes()[0..2]);
-            std::mem::transmute(bytes)
+            u16::from_le_bytes(bytes)
         };
         match is_upper {
             true => Ok((Self::Big(value), 2)),
