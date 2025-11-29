@@ -116,41 +116,22 @@ fn recurse_games(
     key: CacheKey,
     depth: u32,
 ) -> [u64; 2] {
+    // all possible rolls together with their occurrences
     let all_rolls = [
-        1 + 1 + 1,
-        1 + 1 + 2,
-        1 + 1 + 3,
-        1 + 2 + 1,
-        1 + 2 + 2,
-        1 + 2 + 3,
-        1 + 3 + 1,
-        1 + 3 + 2,
-        1 + 3 + 3,
-        2 + 1 + 1,
-        2 + 1 + 2,
-        2 + 1 + 3,
-        2 + 2 + 1,
-        2 + 2 + 2,
-        2 + 2 + 3,
-        2 + 3 + 1,
-        2 + 3 + 2,
-        2 + 3 + 3,
-        3 + 1 + 1,
-        3 + 1 + 2,
-        3 + 1 + 3,
-        3 + 2 + 1,
-        3 + 2 + 2,
-        3 + 2 + 3,
-        3 + 3 + 1,
-        3 + 3 + 2,
-        3 + 3 + 3,
+        (3,1),
+        (4,3),
+        (5,6),
+        (6,7),
+        (7,6),
+        (8,3),
+        (9,1),
     ];
 
-    let mut wins = [0; 2];
+    let mut total_wins = [0; 2];
 
-    for roll in all_rolls {
+    for (roll, factor) in all_rolls {
         let key = key.clone().with(roll, depth);
-        let results = if let Some(lookup) = cache.get(&key) {
+        let roll_wins = if let Some(lookup) = cache.get(&key) {
             *lookup
         } else {
             let mut copy = players.clone();
@@ -158,19 +139,20 @@ fn recurse_games(
             if copy[active_player].score >= 21 {
                 let mut branch_wins = [0;2];
                 branch_wins[active_player] += 1;
-                wins[active_player] += 1;
                 cache.insert(key, branch_wins);
+
+                total_wins[active_player] += factor;
                 continue;
             }
             let result = recurse_games(copy, active_player ^ 1, cache, key, depth + 1);
             cache.insert(key, result);
             result
         };
-        wins[0] += results[0];
-        wins[1] += results[1];
+        total_wins[0] += roll_wins[0] * factor;
+        total_wins[1] += roll_wins[1] * factor;
     }
 
-    wins
+    total_wins
 }
 
 #[cfg(test)]
