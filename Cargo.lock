@@ -16,7 +16,6 @@ dependencies = [
  "clap_derive",
  "common",
  "crossterm",
- "pattern_parse",
  "rayon",
  "thiserror",
  "tui",
@@ -97,7 +96,6 @@ dependencies = [
  "ahash",
  "bitflags 2.6.0",
  "common",
- "nalgebra",
  "pattern_parse",
  "thiserror",
 ]
@@ -131,7 +129,6 @@ name = "aoc_2024"
 version = "0.1.0"
 dependencies = [
  "ahash",
- "bitflags 2.6.0",
  "common",
  "nalgebra",
  "nom",
@@ -144,6 +141,7 @@ name = "aoc_2025"
 version = "0.1.0"
 dependencies = [
  "common",
+ "pattern_parse",
  "thiserror",
 ]
 

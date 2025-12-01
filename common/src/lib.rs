@@ -1,5 +1,6 @@
 use std::{fmt::Debug, io::BufRead};
 
+pub mod bit_grid;
 pub mod bit_set;
 pub mod debug;
 pub mod geometry_2d;
