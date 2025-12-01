@@ -4,13 +4,10 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-ahash = "0.8.3"
-bitflags = "2.4.0"
 common = { version = "0.1.0", path = "../common" }
-nom = "7.1.3"
 pattern_parse = { version = "0.1.0", path = "../pattern_parse" }
-thiserror = "1.0.37"
-nalgebra = "0.33"
 
-[profile.dev.package.nalgebra]
-opt-level = 1
+ahash = { workspace = true }
+thiserror = { workspace = true }
+nalgebra = { workspace = true }
+nom = "7.1.3"

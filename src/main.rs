@@ -19,6 +19,7 @@ static YEARS: &[&common::Year] = &[
     &aoc_2022::YEAR,
     &aoc_2023::YEAR,
     &aoc_2024::YEAR,
+    &aoc_2025::YEAR,
 ];
 
 #[derive(Debug, clap_derive::Parser)]

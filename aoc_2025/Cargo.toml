@@ -1,0 +1,10 @@
+[package]
+name = "aoc_2025"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+common = { path = "../common" }
+pattern_parse = { path = "../pattern_parse" }
+
+thiserror = { workspace = true }

@@ -6,8 +6,9 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-ahash = "0.8.3"
-bitflags = "2.4.0"
-common = { version = "0.1.0", path = "../common" }
-pattern_parse = { version = "0.1.0", path = "../pattern_parse" }
-thiserror = "1.0.37"
+common = { path = "../common" }
+pattern_parse = { path = "../pattern_parse" }
+
+ahash = { workspace = true }
+bitflags = { workspace = true }
+thiserror = { workspace = true }
