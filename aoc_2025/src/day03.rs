@@ -22,7 +22,7 @@ fn max_with_index<'a>(iter: impl IntoIterator<Item = &'a u8>) -> (u8, usize) {
     let mut iter = iter.into_iter().enumerate();
     let (mut max_idx, mut max_val) = iter.next().expect("used empty range");
 
-    while let Some((idx, val)) = iter.next() {
+    for (idx, val) in iter {
         if val > max_val {
             max_val = val;
             max_idx = idx;
@@ -47,7 +47,8 @@ pub fn task2(input: Linewise<String>) -> Result<u64, Error> {
         for _ in 0..12 {
             let (digit, idx) = max_with_index(&bytes[start..end]);
             joltage = joltage * 10 + digit as u64;
-            start = start + idx + 1;
+            // NOTE: idx is the relative position in the start..end range
+            start += idx + 1;
             end += 1;
         }
 
