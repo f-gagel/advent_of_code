@@ -8,4 +8,5 @@ common::decl_year! {
     day07 {task1;task2;}
     day08 {task1;task2;}
     day09 {task1;task2;}
+    day11 {task1;task2;}
 }
